@@ -11,6 +11,7 @@ variables:
 
 .oidc-agent-deb-before-script: &oidc-agent-deb-before-script
   - |
+    set -x
     git clone -b debian/dev_`cat VERSION` http://salsa.debian.org/debian/oidc-agent.git delme
     ls -la
     test -e debian && ls -la debian
@@ -20,7 +21,7 @@ variables:
     [ "x${RELEASE}" == "xbionic" ] && {
         cat debian/control \
             | sed s/"libgtk-3-dev (>= 3.24)"/"libgtk-3-dev (>= 3.22)"/ \
-            | sed s/""libwebkit2gtk-4.0-dev (>= 2.34)/""libwebkit2gtk-4.0-dev (>= 2.32)/ \
+            | sed s/"libwebkit2gtk-4.0-dev (>= 2.34)"/"libwebkit2gtk-4.0-dev (>= 2.32)"/ \
         > debian/new-control
         cat debian/new-control > debian/control
     }
